@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next muse" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Git," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="47Log" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="主要目的理解Git的设计理念，Git的小技巧 Git是否能代替SVN这是很多人第一次使用Git的时候，都会报这样的疑问。我们带着这样的疑问看看Git的设计理 念 Git的设计理念 速度  简单的设计 对非线性开发模式的强力支持 完全分布式 有能力高效管理类似 Linux 内核一样的超大规模项目（速度和数据量）  速度 几乎所有的操作都是离线的 使用直接镜像的方式保存文件，并不是保存文件的差异  简">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 演讲稿">
+<meta property="og:url" content="http://blog.47log.com/2017/01/19/Git-演讲/index.html">
+<meta property="og:site_name" content="47Log">
+<meta property="og:description" content="主要目的理解Git的设计理念，Git的小技巧 Git是否能代替SVN这是很多人第一次使用Git的时候，都会报这样的疑问。我们带着这样的疑问看看Git的设计理 念 Git的设计理念 速度  简单的设计 对非线性开发模式的强力支持 完全分布式 有能力高效管理类似 Linux 内核一样的超大规模项目（速度和数据量）  速度 几乎所有的操作都是离线的 使用直接镜像的方式保存文件，并不是保存文件的差异  简">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2016-12-29-14827414722893.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2016-12-29-14829103251989.jpg">
+<meta property="og:updated_time" content="2018-06-03T12:19:00.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git 演讲稿">
+<meta name="twitter:description" content="主要目的理解Git的设计理念，Git的小技巧 Git是否能代替SVN这是很多人第一次使用Git的时候，都会报这样的疑问。我们带着这样的疑问看看Git的设计理 念 Git的设计理念 速度  简单的设计 对非线性开发模式的强力支持 完全分布式 有能力高效管理类似 Linux 内核一样的超大规模项目（速度和数据量）  速度 几乎所有的操作都是离线的 使用直接镜像的方式保存文件，并不是保存文件的差异  简">
+<meta name="twitter:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2016-12-29-14827414722893.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.47log.com/2017/01/19/Git-演讲/"/>
+
+
+
+
+
+  <title>Git 演讲稿 | 47Log</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-99928731-1', 'auto');
+  ga('send', 'pageview');
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">47Log</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.47log.com/2017/01/19/Git-演讲/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HangoX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="47Log">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Git 演讲稿</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-19T15:24:28+00:00">
+                2017-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/19/Git-演讲/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/19/Git-演讲/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/01/19/Git-演讲/" class="leancloud_visitors" data-flag-title="Git 演讲稿">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="主要目的"><a href="#主要目的" class="headerlink" title="主要目的"></a>主要目的</h2><p>理解Git的设计理念，Git的小技巧</p>
+<h3 id="Git是否能代替SVN"><a href="#Git是否能代替SVN" class="headerlink" title="Git是否能代替SVN"></a>Git是否能代替SVN</h3><p>这是很多人第一次使用Git的时候，都会报这样的疑问。我们带着这样的疑问看看Git的设计理 念</p>
+<h4 id="Git的设计理念"><a href="#Git的设计理念" class="headerlink" title="Git的设计理念"></a>Git的设计理念</h4><ul>
+<li>速度 </li>
+<li>简单的设计</li>
+<li>对非线性开发模式的强力支持</li>
+<li>完全分布式</li>
+<li>有能力高效管理类似 Linux 内核一样的超大规模项目（速度和数据量）</li>
+</ul>
+<h5 id="速度"><a href="#速度" class="headerlink" title="速度"></a>速度</h5><ul>
+<li>几乎所有的操作都是离线的</li>
+<li>使用直接镜像的方式保存文件，并不是保存文件的差异</li>
+</ul>
+<h5 id="简单的设计"><a href="#简单的设计" class="headerlink" title="简单的设计"></a>简单的设计</h5><ul>
+<li>Git 几乎所有的操作都是往里面添加操作,所以尽管大胆的操作</li>
+</ul>
+<h5 id="对于非线性开发的支持"><a href="#对于非线性开发的支持" class="headerlink" title="对于非线性开发的支持"></a>对于非线性开发的支持</h5><ul>
+<li>也就是说你可以划分很多功能之后同时开发（这个后面会讲到非线性开发）</li>
+</ul>
+<h5 id="完全分布式"><a href="#完全分布式" class="headerlink" title="完全分布式"></a>完全分布式</h5><ul>
+<li>每一个节点都是一个完整的节点，不存在主从区别</li>
+</ul>
+<h5 id="管理Linux-这样的项目"><a href="#管理Linux-这样的项目" class="headerlink" title="管理Linux 这样的项目"></a>管理Linux 这样的项目</h5><ul>
+<li>这个应该是对之前bitkeeper最大的评价了吧</li>
+</ul>
+<blockquote>
+<p>从Git的设计理念可以看出来，Git各方面的设计都比SVN要强大。除了多占用一点磁盘</p>
+</blockquote>
+<h3 id="Git基础"><a href="#Git基础" class="headerlink" title="Git基础"></a>Git基础</h3><h4 id="三种状态"><a href="#三种状态" class="headerlink" title="三种状态"></a>三种状态</h4><p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2016-12-29-14827414722893.jpg" alt=""><br>已修改-&gt;已暂存-&gt;已提交</p>
+<h3 id="Git使用"><a href="#Git使用" class="headerlink" title="Git使用"></a>Git使用</h3><h4 id="初次使用"><a href="#初次使用" class="headerlink" title="初次使用"></a>初次使用</h4><h5 id="设置用户信息"><a href="#设置用户信息" class="headerlink" title="设置用户信息"></a>设置用户信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name HanGuang</span><br><span class="line">git config --global user.email liang.hanguang93@gmail.com</span><br></pre></td></tr></table></figure>
+<h5 id="设置保存密码"><a href="#设置保存密码" class="headerlink" title="设置保存密码"></a>设置保存密码</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#默认是不会保存密码的</span></span><br><span class="line"><span class="comment">#保存密码到内存,默认为15分钟</span></span><br><span class="line">git config --global credential.helper cache --timeout &lt;second&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#明文保存密码到磁盘，默认位置为`~/.git_credential`</span></span><br><span class="line">git config --global credential.helper store --file &lt;path&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#加密保存在系统敏感库</span></span><br><span class="line"><span class="comment">#for widnow</span></span><br><span class="line">git config --global credential.helper winstore</span><br><span class="line"><span class="comment">#for mac</span></span><br><span class="line">git config --global credential.helper osxkeychain</span><br></pre></td></tr></table></figure>
+<h5 id="设置不忽略文件名大小写"><a href="#设置不忽略文件名大小写" class="headerlink" title="设置不忽略文件名大小写"></a>设置不忽略文件名大小写</h5><p>git的默认状态是不会追踪文件明的大小写变化的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.ignorecase <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h5 id="全局的-gitignore"><a href="#全局的-gitignore" class="headerlink" title="全局的.gitignore"></a>全局的.gitignore</h5><p>设置全局的<code>.gitignore</code> 位置在<code>/Users/${user}/.gitignore_global</code>。<br>主要是用来屏蔽一些系统在每个目录上都会有的文件，比如Mac上的 <code>.DS_Store</code> </p>
+<h4 id="配置项目的第一次"><a href="#配置项目的第一次" class="headerlink" title="配置项目的第一次"></a>配置项目的第一次</h4><h5 id="编辑-gitignore"><a href="#编辑-gitignore" class="headerlink" title="编辑.gitignore"></a>编辑.gitignore</h5><p>下面我Android 项目常用的.gitignore</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#iml 是IDE生成的文件，项目下来之后会自生成，而且不一样，不需要提交</span></span><br><span class="line">*.iml</span><br><span class="line"><span class="comment">#保存IDE文件的地方，与使用者有关系，不能提交</span></span><br><span class="line">.idea</span><br><span class="line"><span class="comment">#gradle 下载的文件，不需要提交</span></span><br><span class="line">.gradle</span><br><span class="line"><span class="comment">#保存本地变量的文件，每个人逗不一样不能提交</span></span><br><span class="line">/local.properties </span><br><span class="line"><span class="comment">#构建生成的文件，没有提交的必要</span></span><br><span class="line">/build</span><br><span class="line">.externalNativeBuild</span><br><span class="line"><span class="comment">#调试时获取的截图，不需要提交</span></span><br><span class="line">/captures</span><br></pre></td></tr></table></figure>
+<p>这只是列举了Android Studio 这边常用的规则，具体规则要和项目有关系。<br>最大的原则是：__</p>
+<h5 id="项目的用户名和Email"><a href="#项目的用户名和Email" class="headerlink" title="项目的用户名和Email"></a>项目的用户名和Email</h5><p>当项目的用户名和email 和全局的不一样的时候，需要单独为项目设置用户明和email</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name HanGuang</span><br><span class="line">git config user.email hliang2@heygears.com</span><br></pre></td></tr></table></figure>
+<h4 id="后悔药"><a href="#后悔药" class="headerlink" title="后悔药"></a>后悔药</h4><p>很多时候我们写了commit的时候就会发现自己提交少了文件,这个时候就可以使用下面这几个命令了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#把相应文件add进去之后</span></span><br><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+<h4 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h4><p>当你在项目的一部分上已经工作一段时间后，所有东西都进入了混乱的状态，而这时你想要切换到另一个分支做一点别的事情。 问题是，你不想仅仅因为过会儿回到这一点而为做了一半的工作创建一次提交。这个时候你就可以使用<code>stash</code>命令保存你的工作了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#存储操作</span></span><br><span class="line">git stash</span><br><span class="line"></span><br><span class="line"><span class="comment">#弹出操作</span></span><br><span class="line">git stash pop</span><br><span class="line"></span><br><span class="line"><span class="comment">#列出所有的stash</span></span><br><span class="line">git stash list</span><br></pre></td></tr></table></figure>
+<h4 id="分支妙用"><a href="#分支妙用" class="headerlink" title="分支妙用"></a>分支妙用</h4><h5 id="正常工作流"><a href="#正常工作流" class="headerlink" title="正常工作流"></a>正常工作流</h5><ul>
+<li>master分支（用来保存最新的可以发布的代码）</li>
+<li>develop分支(开发时的分支，不一定稳定，当代码稳定的时候需要合并到master 分支)</li>
+<li>release 分支（指向最新发布的代码）</li>
+<li>各种feature_开头的，代指各种功能特性</li>
+<li>hot_fix 分支，专门用来修复bug</li>
+<li>打tag（tag 其实就是一个特殊的分支。如果你完成了版本v1.0开发，可以打一个tag 名字为为v1.0 以后v1.0 版本出现问题可以直接checkout 出来修复后合并回去 ）</li>
+</ul>
+<h5 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h5><p>可以checkout 一个叫test 的分支，你想在里面怎么改都可以，只要不推送到远端，怎么改都是这个分支的事情。注意一点 <strong>本地控件为clean 的时候才切换分支</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git branch test_hugaoxiagao</span><br><span class="line">git checkout test_hugaoxiagao</span><br><span class="line"><span class="comment">#你现在可以在这个分支上为所欲为了</span></span><br></pre></td></tr></table></figure>
+<h4 id="pull-分解"><a href="#pull-分解" class="headerlink" title="pull 分解"></a>pull 分解</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master</span><br><span class="line"><span class="comment">#以上命令可以分解为</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#拉取origin远端上的master 分支数据</span></span><br><span class="line">git fetch origin master</span><br><span class="line"><span class="comment">#合并origin/master 的数据到 本地master </span></span><br><span class="line">git merge origin/master</span><br><span class="line"><span class="comment">#其实你还有一个选择</span></span><br><span class="line">git rebase origin/master</span><br><span class="line"><span class="comment">#这样指令将会把你的提交和远端的提交重新排列</span></span><br></pre></td></tr></table></figure>
+<h4 id="cherry-pick"><a href="#cherry-pick" class="headerlink" title="cherry-pick"></a>cherry-pick</h4><p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2016-12-29-14829103251989.jpg" alt=""><br>当你只想合并c3 到master，并不想把ruby_client分支合并到master的时候。你就可以使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#这个命令可以把某个提交提取到当前的分支上</span></span><br><span class="line">git cherry-pick &lt;<span class="built_in">hash</span>&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="多远端"><a href="#多远端" class="headerlink" title="多远端"></a>多远端</h4><p>git 可以添加多个远端，同时和多个远端进行同步</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin http://gitlab.com/hangox.git</span><br><span class="line">git remote add mygitlab http://gitlab.47log.com/hangox.git</span><br><span class="line"><span class="comment">#这样就添加了两个不同名字的远端了，push 指定相应的远端就好了</span></span><br></pre></td></tr></table></figure>
+<h4 id="子模块"><a href="#子模块" class="headerlink" title="子模块"></a>子模块</h4><p>举个栗子,我们要开发一个控制耳机的App ，大体划分为蓝牙库交互库和App界面体。<br>由于前期编写的过程中蓝牙交互库需要经常修改，并不适合把蓝牙交互库打包成一个文件导入。这个时候我们就可以引入子项目的概念，app项目中加入bluetoothLibrary 这个子项目，分别来自不同的远端。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#当前在App项目中添加子模块</span></span><br><span class="line">git submodule add &lt;remote_url&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="SourceTree"><a href="#SourceTree" class="headerlink" title="SourceTree"></a>SourceTree</h4><p>请使用sourceTree 英文版本</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Git/" rel="tag"># Git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/19/Android-自定义按钮状态/" rel="next" title="Android 自定义按钮状态">
+                <i class="fa fa-chevron-left"></i> Android 自定义按钮状态
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/01/Git快速入门/" rel="prev" title="Git快速入门">
+                Git快速入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HangoX" />
+          <p class="site-author-name" itemprop="name">HangoX</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要目的"><span class="nav-number">1.</span> <span class="nav-text">主要目的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git是否能代替SVN"><span class="nav-number">1.1.</span> <span class="nav-text">Git是否能代替SVN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Git的设计理念"><span class="nav-number">1.1.1.</span> <span class="nav-text">Git的设计理念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#速度"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">速度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#简单的设计"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">简单的设计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对于非线性开发的支持"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">对于非线性开发的支持</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#完全分布式"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">完全分布式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#管理Linux-这样的项目"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">管理Linux 这样的项目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git基础"><span class="nav-number">1.2.</span> <span class="nav-text">Git基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三种状态"><span class="nav-number">1.2.1.</span> <span class="nav-text">三种状态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git使用"><span class="nav-number">1.3.</span> <span class="nav-text">Git使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初次使用"><span class="nav-number">1.3.1.</span> <span class="nav-text">初次使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#设置用户信息"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">设置用户信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置保存密码"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">设置保存密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置不忽略文件名大小写"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">设置不忽略文件名大小写</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#全局的-gitignore"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">全局的.gitignore</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置项目的第一次"><span class="nav-number">1.3.2.</span> <span class="nav-text">配置项目的第一次</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#编辑-gitignore"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">编辑.gitignore</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#项目的用户名和Email"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">项目的用户名和Email</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后悔药"><span class="nav-number">1.3.3.</span> <span class="nav-text">后悔药</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git-stash"><span class="nav-number">1.3.4.</span> <span class="nav-text">git stash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支妙用"><span class="nav-number">1.3.5.</span> <span class="nav-text">分支妙用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#正常工作流"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">正常工作流</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#本地测试"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">本地测试</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pull-分解"><span class="nav-number">1.3.6.</span> <span class="nav-text">pull 分解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cherry-pick"><span class="nav-number">1.3.7.</span> <span class="nav-text">cherry-pick</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多远端"><span class="nav-number">1.3.8.</span> <span class="nav-text">多远端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子模块"><span class="nav-number">1.3.9.</span> <span class="nav-text">子模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SourceTree"><span class="nav-number">1.3.10.</span> <span class="nav-text">SourceTree</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HangoX</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+    由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  </div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">
+    主题 &mdash;
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+      NexT.Muse
+    </a>
+  </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://47log.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.47log.com/2017/01/19/Git-演讲/';
+          this.page.identifier = '2017/01/19/Git-演讲/';
+          this.page.title = 'Git 演讲稿';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://47log.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("cvsbxzMiFR6fHw8Ki6J0I1ct-gzGzoHsz", "SiCTwVOB5Amm4ui6xXeMH9u1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

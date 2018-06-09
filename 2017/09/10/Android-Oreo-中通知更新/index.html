@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next muse" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,notification," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="47Log" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="资料来源Notification Update in Android OreoAndroid 8.0 功能和 API 新特性一览 通知渠道（Notification channel）：允许您为要显示的每种通知类型创建用户可自定义的渠道。总之就是通知和广告通过不同的渠道发，用户可以通过系统设置单独禁止某一个  通知标志（Notification badges）：就是iOS上那个小红点，不过不一定是红">
+<meta name="keywords" content="android,notification">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Oreo 中通知的更新">
+<meta property="og:url" content="http://blog.47log.com/2017/09/10/Android-Oreo-中通知更新/index.html">
+<meta property="og:site_name" content="47Log">
+<meta property="og:description" content="资料来源Notification Update in Android OreoAndroid 8.0 功能和 API 新特性一览 通知渠道（Notification channel）：允许您为要显示的每种通知类型创建用户可自定义的渠道。总之就是通知和广告通过不同的渠道发，用户可以通过系统设置单独禁止某一个  通知标志（Notification badges）：就是iOS上那个小红点，不过不一定是红">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050326690869.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050363163589.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050365285068.gif">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050368297090.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050369807944.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050373340368.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050374877643.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050378106834.jpg">
+<meta property="og:updated_time" content="2018-06-03T12:19:00.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Oreo 中通知的更新">
+<meta name="twitter:description" content="资料来源Notification Update in Android OreoAndroid 8.0 功能和 API 新特性一览 通知渠道（Notification channel）：允许您为要显示的每种通知类型创建用户可自定义的渠道。总之就是通知和广告通过不同的渠道发，用户可以通过系统设置单独禁止某一个  通知标志（Notification badges）：就是iOS上那个小红点，不过不一定是红">
+<meta name="twitter:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050326690869.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.47log.com/2017/09/10/Android-Oreo-中通知更新/"/>
+
+
+
+
+
+  <title>Android Oreo 中通知的更新 | 47Log</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-99928731-1', 'auto');
+  ga('send', 'pageview');
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">47Log</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.47log.com/2017/09/10/Android-Oreo-中通知更新/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HangoX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="47Log">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android Oreo 中通知的更新</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-10T15:44:10+00:00">
+                2017-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/10/Android-Oreo-中通知更新/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/09/10/Android-Oreo-中通知更新/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/09/10/Android-Oreo-中通知更新/" class="leancloud_visitors" data-flag-title="Android Oreo 中通知的更新">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>资料来源<br><a href="https://www.youtube.com/watch?v=zGIw4MIJn5o&amp;feature=push-u&amp;attr_tag=Re0sC9vId_kC2kFm-6" target="_blank" rel="noopener">Notification Update in Android Oreo</a><br><a href="https://developer.android.com/about/versions/oreo/android-8.0.html#mm" target="_blank" rel="noopener">Android 8.0 功能和 API</a></p>
+<h2 id="新特性一览"><a href="#新特性一览" class="headerlink" title="新特性一览"></a>新特性一览</h2><ul>
+<li><p>通知渠道（Notification channel）：允许您为要显示的每种通知类型创建用户可自定义的渠道。总之就是通知和广告通过不同的渠道发，用户可以通过系统设置单独禁止某一个</p>
+</li>
+<li><p>通知标志（Notification badges）：就是iOS上那个小红点，不过不一定是红色，也没有数字，但有别的骚操作</p>
+</li>
+<li><p>休眠（Snoozing）：用户可以将通知置于休眠状态，以便稍后重新显示它。重新显示时通知的重要程度与首次显示时相同。应用可以移除或更新已休眠的通知，但更新休眠的通知并不会使其重新显示。其实就是<strong>稍后处理</strong>。。。</p>
+</li>
+<li><p>通知超时（Notification timeout）：现在，使用 setTimeoutAfter() 创建通知时您可以设置超时。您可以使用此函数指定一个持续时间，超过该持续时间后，通知应取消。如果需要，您可以在指定的超时持续时间之前取消通知。例如，如果你8点钟通知上飞机，但是现在已经12点了，这个通知已经对用户无用了，可以取消掉了。</p>
+</li>
+<li><p>锁屏排序（Lockscreen Ordering）。就是会根据通知的重要性排序，目前只知道ongoing通知一定是第一个的</p>
+</li>
+<li><p>通知设置（Notification settings）：我也不知道这个是啥，反正我没有试出来，知道的人麻烦告诉我一声。官网原文是这样的：当您使用Notification.INTENT_CATEGORY_NOTIFICATION_PREFERENCESIntent 从通知创建指向应用通知设置的链接时，您可以调用 setSettingsText() 来设置要显示的文本。此系统可以提供以下 Extra 数据和 Intent，用于过滤应用必须向用户显示的设置：EXTRA_CHANNEL_ID、NOTIFICATION_TAG 和 NOTIFICATION_ID。</p>
+</li>
+</ul>
+<ul>
+<li><p>通知清除（Notification dismissal）：新的API让你知道是用户移除了还是工具移除了通知,反正我是觉得没啥用了。。。</p>
+</li>
+<li><p>背景颜色（Colorized）：就是在持续通知上设置颜色。比如闹钟响的时候可以设置成自己的颜色，这样用户就能一样把你认出来</p>
+</li>
+<li><p>消息样式（MessageStyle）：现在，使用 MessagingStyle 类的通知可在其折叠形式中显示更多内容。</p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="详细解析"><a href="#详细解析" class="headerlink" title="详细解析"></a>详细解析</h2><h3 id="通知渠道（Notification-channel）"><a href="#通知渠道（Notification-channel）" class="headerlink" title="通知渠道（Notification channel）"></a>通知渠道（Notification channel）</h3><p>通知渠道是<strong>Android Oreo</strong> 通知更新中最重要的一个特性，android 官方认为这是一个gift 给用户还有开发者。简单一点来说就是，以后可以把重要通知和广告通知分别设到不同的渠道散，这样当用户不想要广告通知的时候就不需要把整个通知禁止或者直接把App卸载。</p>
+<p>例如，在android o 中，系统会有这个界面<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050326690869.jpg" alt=""><br>可以看到，用户可以选择关闭某个渠道的通知</p>
+<p><strong>创建渠道的只需要3步</strong></p>
+<ul>
+<li>使用渠道唯一ID和名字创建</li>
+<li>配置渠道</li>
+<li>注册渠道到NotificationManager</li>
+</ul>
+<p>代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用唯一的ID创建渠道对象</span></span><br><span class="line">NotificationChannel adChannel = <span class="keyword">new</span> NotificationChannel(AD_CHANNEL_ID,</span><br><span class="line">      <span class="string">"广告渠道"</span>,</span><br><span class="line">       NotificationManager.IMPORTANCE_DEFAULT);</span><br><span class="line"><span class="comment">//初始化channel</span></span><br><span class="line">adChannel.setLightColor(Color.RED);</span><br><span class="line"></span><br><span class="line"><span class="comment">//向notification manager 提交channel</span></span><br><span class="line">NotificationManager notificationManager  = (NotificationManager)</span><br><span class="line">            getSystemService(Context.NOTIFICATION_SERVICE);</span><br><span class="line">notificationManager.createNotificationChannel(adChannel);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果一个应用发送通知的时候没有设置channelId，将会引发崩溃</p>
+</blockquote>
+<h3 id="通知标志（Notification-badges）"><a href="#通知标志（Notification-badges）" class="headerlink" title="通知标志（Notification badges）"></a>通知标志（Notification badges）</h3><p>效果如图<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050363163589.jpg" alt=""><br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050365285068.gif" alt=""></p>
+<p>如果不想使用badges，可以通过以下代码设置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对，这是整个channel 控制的</span></span><br><span class="line">mChannel.setShowBadge(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<p>同时，你也能控制notifications的数字，也就是图片这个<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050368297090.jpg" alt=""></p>
+<p>通过以下代码控制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Notification notification = <span class="keyword">new</span> </span><br><span class="line">Notification.Builder(MainActivity.<span class="keyword">this</span>)</span><br><span class="line">    .setNumber(messageCount)</span><br></pre></td></tr></table></figure>
+<h3 id="通知清除（Notification-dismissal）"><a href="#通知清除（Notification-dismissal）" class="headerlink" title="通知清除（Notification dismissal）"></a>通知清除（Notification dismissal）</h3><p>API 26 中添加了这个方法</p>
+<p><strong>onNotificationRemoved</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameters</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sbn</td>
+<td>StatusBarNotification：一种数据结构，封装至少用于发布的原始信息（标签和ID）和源（包名称）</td>
+</tr>
+<tr>
+<td>rankingMap</td>
+<td>NotificationListenerService.RankingMap：当前排名地图可用于检索活动通知排名信息。</td>
+</tr>
+<tr>
+<td>reason</td>
+<td>int：<a href="https://developer.android.com/reference/android/service/notification/NotificationListenerService.html#REASON_LISTENER_CANCEL" target="_blank" rel="noopener">REASON_LISTENER_CANCEL</a>，等</td>
+</tr>
+</tbody>
+</table>
+<p>通过判断第三个参数是<code>REASON_CANCEL</code>还是<code>REASON_LISTENER_CANCEL</code>就可以知道是用户删除还是系统删除了，然而我并不知道有啥用[doge]</p>
+<h3 id="背景颜色（Colorized）"><a href="#背景颜色（Colorized）" class="headerlink" title="背景颜色（Colorized）"></a>背景颜色（Colorized）</h3><p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050369807944.jpg" alt=""></p>
+<p>设置背景颜色需要三要素</p>
+<ol>
+<li>必须是ongoing notification</li>
+<li>通过<code>setColor</code>,也就是用来设置LED灯的API设置颜色</li>
+<li>通过<code>setColorRized(true)</code> 来开启</li>
+</ol>
+<p>以下是示例代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当然这个代码是不能创建通知</span></span><br><span class="line">Notification notification = <span class="keyword">new</span> Notification.Builder(<span class="keyword">this</span>,AD_CHANNEL_ID)</span><br><span class="line">                .setOngoing(<span class="keyword">true</span>)</span><br><span class="line">                .setColor(Color.RED)</span><br><span class="line">                .setColorized(<span class="keyword">true</span>)</span><br><span class="line">                .build();</span><br></pre></td></tr></table></figure>
+<h3 id="锁屏排序（Lockscreen-Ordering）"><a href="#锁屏排序（Lockscreen-Ordering）" class="headerlink" title="锁屏排序（Lockscreen Ordering）"></a>锁屏排序（Lockscreen Ordering）</h3><p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050373340368.jpg" alt=""></p>
+<p>系统自动通过<code>setCategory()</code>,<code>setPriority()</code>和<code>addPersion()</code>进行排序</p>
+<h3 id="消息样式（MessageStyle）"><a href="#消息样式（MessageStyle）" class="headerlink" title="消息样式（MessageStyle）"></a>消息样式（MessageStyle）</h3><p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050374877643.jpg" alt=""></p>
+<p>支持在折叠中显示更多的文字</p>
+<h2 id="求关注"><a href="#求关注" class="headerlink" title="求关注"></a>求关注</h2><p>如果我总结得不错，不妨关注一下我的微信号，每周更新安卓开发最新的资讯</p>
+<p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-09-10-15050378106834.jpg" alt="-c"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+            <a href="/tags/notification/" rel="tag"># notification</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/08/android自动构建之gitlab实现/" rel="next" title="android自动构建之gitlab实现 ">
+                <i class="fa fa-chevron-left"></i> android自动构建之gitlab实现 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/15/2017-09-15-06:24/" rel="prev" title="todo-mvvm-databinding">
+                todo-mvvm-databinding <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HangoX" />
+          <p class="site-author-name" itemprop="name">HangoX</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#新特性一览"><span class="nav-number">1.</span> <span class="nav-text">新特性一览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细解析"><span class="nav-number">2.</span> <span class="nav-text">详细解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通知渠道（Notification-channel）"><span class="nav-number">2.1.</span> <span class="nav-text">通知渠道（Notification channel）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通知标志（Notification-badges）"><span class="nav-number">2.2.</span> <span class="nav-text">通知标志（Notification badges）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通知清除（Notification-dismissal）"><span class="nav-number">2.3.</span> <span class="nav-text">通知清除（Notification dismissal）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#背景颜色（Colorized）"><span class="nav-number">2.4.</span> <span class="nav-text">背景颜色（Colorized）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁屏排序（Lockscreen-Ordering）"><span class="nav-number">2.5.</span> <span class="nav-text">锁屏排序（Lockscreen Ordering）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息样式（MessageStyle）"><span class="nav-number">2.6.</span> <span class="nav-text">消息样式（MessageStyle）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求关注"><span class="nav-number">3.</span> <span class="nav-text">求关注</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HangoX</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+    由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  </div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">
+    主题 &mdash;
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+      NexT.Muse
+    </a>
+  </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://47log.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.47log.com/2017/09/10/Android-Oreo-中通知更新/';
+          this.page.identifier = '2017/09/10/Android-Oreo-中通知更新/';
+          this.page.title = 'Android Oreo 中通知的更新';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://47log.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("cvsbxzMiFR6fHw8Ki6J0I1ct-gzGzoHsz", "SiCTwVOB5Amm4ui6xXeMH9u1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

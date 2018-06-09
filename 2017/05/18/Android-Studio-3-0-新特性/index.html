@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next muse" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="47Log" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="[TOC] Kotlin 集成创建工程界面多了 include Kotlin Support">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio 3.0 新特性">
+<meta property="og:url" content="http://blog.47log.com/2017/05/18/Android-Studio-3-0-新特性/index.html">
+<meta property="og:site_name" content="47Log">
+<meta property="og:description" content="[TOC] Kotlin 集成创建工程界面多了 include Kotlin Support">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950853642988.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950856425564.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950868183922.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950868986947.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950886964018.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950892822830.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950892978293.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950895410113.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950911898211.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950926485361.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950939330191.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950941758409.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950951755280.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950952198175.jpg">
+<meta property="og:updated_time" content="2018-06-03T12:19:00.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Studio 3.0 新特性">
+<meta name="twitter:description" content="[TOC] Kotlin 集成创建工程界面多了 include Kotlin Support">
+<meta name="twitter:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950853642988.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.47log.com/2017/05/18/Android-Studio-3-0-新特性/"/>
+
+
+
+
+
+  <title>Android Studio 3.0 新特性 | 47Log</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-99928731-1', 'auto');
+  ga('send', 'pageview');
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">47Log</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.47log.com/2017/05/18/Android-Studio-3-0-新特性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HangoX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="47Log">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android Studio 3.0 新特性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-18T21:59:42+00:00">
+                2017-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/18/Android-Studio-3-0-新特性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/05/18/Android-Studio-3-0-新特性/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/18/Android-Studio-3-0-新特性/" class="leancloud_visitors" data-flag-title="Android Studio 3.0 新特性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h3 id="Kotlin-集成"><a href="#Kotlin-集成" class="headerlink" title="Kotlin 集成"></a>Kotlin 集成</h3><p>创建工程界面多了 <strong>include Kotlin Support</strong><br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950853642988.jpg" alt=""><br><a id="more"></a></p>
+<p>勾选之后后面的这个界面创建的Activity直接就是以Kotlin创建</p>
+<p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950856425564.jpg" alt=""></p>
+<p>在后续创建Activity的窗口里还能选择activity的语言</p>
+<p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950868183922.jpg" alt=""></p>
+<p>当然少不了直接把java类转换为Kotlin的这个插件啦</p>
+<p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950868986947.jpg" alt=""></p>
+<h3 id="基于IDEA-2017-1-版本构建"><a href="#基于IDEA-2017-1-版本构建" class="headerlink" title="基于IDEA 2017.1 版本构建"></a>基于IDEA 2017.1 版本构建</h3><ul>
+<li><p>支持方法参数hint</p>
+<p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950886964018.jpg" alt=""></p>
+</li>
+<li><p>支持按参数排列显示不同颜色<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950892822830.jpg" alt=""></p>
+</li>
+<li><p>开启后效果<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950892978293.jpg" alt=""></p>
+</li>
+<li><p>version control 加入了直接解决按钮<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950895410113.jpg" alt=""></p>
+</li>
+</ul>
+<p><a href="https://blog.jetbrains.com/idea/2017/02/intellij-idea-2017-1-public-preview-java-9-debugger-vcs-search-editor-and-many-more/" target="_blank" rel="noopener">更多特性</a></p>
+<h3 id="对Android-O-的支持"><a href="#对Android-O-的支持" class="headerlink" title="对Android O 的支持"></a>对Android O 的支持</h3><ul>
+<li>可以直接打开字体和对字体xml的支持 <a href="https://developer.android.com/preview/features/working-with-fonts.html" target="_blank" rel="noopener">详情</a></li>
+<li>可以直接下载谷歌提供的可下载字体</li>
+<li>新的Launcher规则支持 <a href="https://developer.android.com/preview/features/adaptive-icons.html" target="_blank" rel="noopener">详情</a><br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950911898211.jpg" alt=""></li>
+</ul>
+<h3 id="对Java8的支持"><a href="#对Java8的支持" class="headerlink" title="对Java8的支持"></a>对Java8的支持</h3><p>使用新的字节码转换技术, <strong>Desugar</strong>。使一些Java8特性支持到任意API,例如</p>
+<ul>
+<li>Lambdas</li>
+<li>Method references <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html" target="_blank" rel="noopener">详情</a></li>
+<li>Default and static interface methods(接口默认实现和静态方法)</li>
+<li>try-with-resouces <a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html" target="_blank" rel="noopener">详情</a></li>
+<li>Type and repeating annotations（类型注解和重复注解）</li>
+</ul>
+<p>使用方法很简单，添加这个<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950926485361.jpg" alt=""></p>
+<h3 id="新的Android-Gradle-插件"><a href="#新的Android-Gradle-插件" class="headerlink" title="新的Android Gradle 插件"></a>新的Android Gradle 插件</h3><p>新的Android Gradle 插件是为了解决大数量模块编译问题，有以下几个特性</p>
+<ul>
+<li>推迟解决依赖以达到更快的配置</li>
+<li>变异感知（Variant-aware）依赖解决方案仅适用于您正在构建的项目和变体</li>
+<li>对代码或资源应用简单的更改时，更快的增量构建时间</li>
+</ul>
+<p>为了实现这些改进，插件行为，DSL和API有一些突破性的变化。这会影响构建文件和Gradle插件。有关如何迁移自己的项目以使用此插件的说明，请看,<a href="https://developer.android.com/studio/preview/features/new-android-plugin-migration.html" target="_blank" rel="noopener">迁移到新的插件</a></p>
+<h3 id="Google’s-Maven-repository"><a href="#Google’s-Maven-repository" class="headerlink" title="Google’s Maven repository"></a>Google’s Maven repository</h3><p>Android支持库Maven依赖关系现在可以在新的Maven存储库中的Android SDK Manager外部使用。结合命令行sdkmanager工具和Gradle，这种新的分发方法简化了使用连续集成系统的Maven依赖关系管理，要使用新的Maven存储库，请将URL添加到build.gradle文件的repository库中，如下所示：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">repositories</span> &#123;</span><br><span class="line">  maven &#123;</span><br><span class="line">    url <span class="string">"https://maven.google.com"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>详情请看<a href="https://developer.android.com/studio/build/dependencies.html#google-maven" target="_blank" rel="noopener">Google Maven and offline repositories</a>   </p>
+<h3 id="新的Android分析器（New-Android-Profiler）"><a href="#新的Android分析器（New-Android-Profiler）" class="headerlink" title="新的Android分析器（New Android Profiler）"></a>新的Android分析器（New Android Profiler）</h3><blockquote>
+<p>note: 这货只支持API 21 或者以上</p>
+</blockquote>
+<p>包括</p>
+<ul>
+<li><a href="https://developer.android.com/studio/profile/cpu-profiler.html" target="_blank" rel="noopener">CPU 分析器</a></li>
+<li><a href="https://developer.android.com/studio/profile/memory-profiler.html" target="_blank" rel="noopener">内存分析器</a></li>
+<li><a href="https://developer.android.com/studio/profile/network-profiler.html" target="_blank" rel="noopener">网路分析器</a></li>
+</ul>
+<p>其中网络调试器直接支持volley和okhttp<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950939330191.jpg" alt=""></p>
+<p>作为此更新的一部分，logcat已移至单独的窗口。</p>
+<h3 id="APK-调试器"><a href="#APK-调试器" class="headerlink" title="APK 调试器"></a>APK 调试器</h3><p>可以直接让你调试Debug APK无需项目源码。入口如下</p>
+<p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950941758409.jpg" alt=""></p>
+<h3 id="新的设备文件浏览器"><a href="#新的设备文件浏览器" class="headerlink" title="新的设备文件浏览器"></a>新的设备文件浏览器</h3><p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950951755280.jpg" alt=""></p>
+<h3 id="Instant-Apps-support"><a href="#Instant-Apps-support" class="headerlink" title="Instant Apps support"></a>Instant Apps support</h3><p>Android Studio 3.0允许您在项目中使用两种新的模块类型即时应用模块和功能模块来创建即时应用。<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-05-18-14950952198175.jpg" alt=""><br>Android Studio 3.0还包括一个新的重构模块化操作和App Links Assistant，以帮助您实施即时应用。有关Instant Apps的详细信息，请参阅<a href="https://developer.android.com/topic/instant-apps/index.html" target="_blank" rel="noopener">Android Instant Apps</a>。</p>
+<h3 id="布局编辑器改进"><a href="#布局编辑器改进" class="headerlink" title="布局编辑器改进"></a>布局编辑器改进</h3><p>Android Studio 3.0中的布局编辑器包含许多新的功能增强功能，其中包括</p>
+<ul>
+<li>更新的组件树，改进了拖放视图插入</li>
+<li>新错误面板</li>
+<li>对查看栅栏和组提供新的支持</li>
+<li>增强链创造</li>
+</ul>
+<h3 id="新的Android-Tings-模板"><a href="#新的Android-Tings-模板" class="headerlink" title="新的Android Tings 模板"></a>新的Android Tings 模板</h3><p>Android Studio 3.0在新项目和新模块向导中包含一组新的模板，因此您可以开始使用Android Things开发物联网设备。有关更多信息，请参阅<a href="https://developer.android.com/things/index.html" target="_blank" rel="noopener">Android Things</a>。</p>
+<h3 id="Layout-Inspector改进"><a href="#Layout-Inspector改进" class="headerlink" title="Layout Inspector改进"></a>Layout Inspector改进</h3><p>包括将属性分组为常规类别，并在“视图树”和“属性”面板中将新的搜索功能分组</p>
+<h3 id="APK-Analyzer-改进"><a href="#APK-Analyzer-改进" class="headerlink" title="APK Analyzer 改进"></a>APK Analyzer 改进</h3><ul>
+<li>显示以前可用的包，类和方法之外的字段</li>
+<li>顶部显示和隐藏字段和方法的新过滤选项</li>
+<li>在树视图中，以斜体显示的节点是未在DEX文件中定义的引用  </li>
+<li>对于启用Proguard构建的APK，您可以加载向DEX查看器添加功能的Proguard映射文件，其中包括：<ul>
+<li>粗体节点指示在缩小代码时不应删除节点</li>
+<li>启用一个按钮，使得在收缩（shrinking）过程中被删除的节点可见</li>
+<li>启用一个按钮，恢复树视图中由Proguard混淆后的节点的原始名称</li>
+</ul>
+</li>
+</ul>
+<h3 id="新的Android模拟器功能"><a href="#新的Android模拟器功能" class="headerlink" title="新的Android模拟器功能"></a>新的Android模拟器功能</h3><ul>
+<li><p>新的API Level 24系统映像和Android O Beta系统映像，包括Google Play商店，以促进您的应用程序的端到端测试，并帮助您保持Google Play服务与您的AVDs保持同步。</p>
+</li>
+<li><p>支持Windows和Linux机器上的OpenGL ES 3.0系统图像API级别24及更高版本，并在较老的模拟器系统映像上对OpenGL ES 2.0图形性能进行显着改进。</p>
+<blockquote>
+<p>注意：我们目前正在尽力自动启用来自英特尔，NVIDIA和AMD的所有现代GPU的OpenGL ES 3.0,如果运行OpenGL ES 3.x应用程序时遇到问题，系统可能尚未自动启用.您可以通过将以下行添加到<code>〜/ .android / advancedFeatures.ini</code>文件中来手动启用OpenGL ES 3.0</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GLESDynamicVersion = true</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一种新的更简单的方法来从Android模拟器生成您的应用的错误报告。</li>
+<li>一个新的链接，可以在Android问题跟踪器（单击模拟器工具栏&gt;扩展控件&gt;帮助&gt;仿真器帮助&gt;文件错误）上为Android团队快速提交与模拟器相关的错误。</li>
+<li>用于配置Android模拟器使用的代理设置的新UI。要配置Android模拟器的代理设置，请单击 <strong>Extended Controls &gt; Settings &gt; Proxy</strong>.</li>
+<li>在模拟器上支持Android Wear设备的旋钮输入的新支持<br>有关Android模拟器更新的更多信息，请参阅<a href="https://developer.android.com/studio/releases/emulator.html" target="_blank" rel="noopener">Android模拟器发行说明</a>。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/20/简化打包到JCenter的流程/" rel="next" title="简化打包到JCenter的流程">
+                <i class="fa fa-chevron-left"></i> 简化打包到JCenter的流程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/01/nexus7-的长宽分别是多少dp/" rel="prev" title="nexus7 的长宽分别是多少dp?">
+                nexus7 的长宽分别是多少dp? <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HangoX" />
+          <p class="site-author-name" itemprop="name">HangoX</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin-集成"><span class="nav-number">1.</span> <span class="nav-text">Kotlin 集成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于IDEA-2017-1-版本构建"><span class="nav-number">2.</span> <span class="nav-text">基于IDEA 2017.1 版本构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对Android-O-的支持"><span class="nav-number">3.</span> <span class="nav-text">对Android O 的支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对Java8的支持"><span class="nav-number">4.</span> <span class="nav-text">对Java8的支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的Android-Gradle-插件"><span class="nav-number">5.</span> <span class="nav-text">新的Android Gradle 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google’s-Maven-repository"><span class="nav-number">6.</span> <span class="nav-text">Google’s Maven repository</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的Android分析器（New-Android-Profiler）"><span class="nav-number">7.</span> <span class="nav-text">新的Android分析器（New Android Profiler）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APK-调试器"><span class="nav-number">8.</span> <span class="nav-text">APK 调试器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的设备文件浏览器"><span class="nav-number">9.</span> <span class="nav-text">新的设备文件浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Instant-Apps-support"><span class="nav-number">10.</span> <span class="nav-text">Instant Apps support</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布局编辑器改进"><span class="nav-number">11.</span> <span class="nav-text">布局编辑器改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的Android-Tings-模板"><span class="nav-number">12.</span> <span class="nav-text">新的Android Tings 模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Layout-Inspector改进"><span class="nav-number">13.</span> <span class="nav-text">Layout Inspector改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APK-Analyzer-改进"><span class="nav-number">14.</span> <span class="nav-text">APK Analyzer 改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新的Android模拟器功能"><span class="nav-number">15.</span> <span class="nav-text">新的Android模拟器功能</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HangoX</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+    由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  </div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">
+    主题 &mdash;
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+      NexT.Muse
+    </a>
+  </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://47log.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.47log.com/2017/05/18/Android-Studio-3-0-新特性/';
+          this.page.identifier = '2017/05/18/Android-Studio-3-0-新特性/';
+          this.page.title = 'Android Studio 3.0 新特性';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://47log.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("cvsbxzMiFR6fHw8Ki6J0I1ct-gzGzoHsz", "SiCTwVOB5Amm4ui6xXeMH9u1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

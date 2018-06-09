@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next muse" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,googleio,2017,gradle," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="47Log" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="提速法则一览   手段 全量构建 Java增量构建 资源增量构建     升级 android gradle tools 到3.0 -15s(-25%) -10(-38%) -2.5(-16%)   避免使用遗留的Multidex -5.5s(-12%) -8(53%) same   debug 环境关闭multi-APK -4.8s(-12%) -0.5s(-6%) -3s(-26%)   设置">
+<meta name="keywords" content="Android,googleio,2017,gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="提速Android Gradle 构建">
+<meta property="og:url" content="http://blog.47log.com/2017/10/31/2017-10-31-04:38/index.html">
+<meta property="og:site_name" content="47Log">
+<meta property="og:description" content="提速法则一览   手段 全量构建 Java增量构建 资源增量构建     升级 android gradle tools 到3.0 -15s(-25%) -10(-38%) -2.5(-16%)   避免使用遗留的Multidex -5.5s(-12%) -8(53%) same   debug 环境关闭multi-APK -4.8s(-12%) -0.5s(-6%) -3s(-26%)   设置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-11-01-15094385826761.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-11-01-15094404747010.jpg">
+<meta property="og:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-11-01-15094467796965.jpg">
+<meta property="og:updated_time" content="2018-06-03T12:19:00.197Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="提速Android Gradle 构建">
+<meta name="twitter:description" content="提速法则一览   手段 全量构建 Java增量构建 资源增量构建     升级 android gradle tools 到3.0 -15s(-25%) -10(-38%) -2.5(-16%)   避免使用遗留的Multidex -5.5s(-12%) -8(53%) same   debug 环境关闭multi-APK -4.8s(-12%) -0.5s(-6%) -3s(-26%)   设置">
+<meta name="twitter:image" content="http://7vzoxp.com1.z0.glb.clouddn.com/2017-11-01-15094385826761.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.47log.com/2017/10/31/2017-10-31-04:38/"/>
+
+
+
+
+
+  <title>提速Android Gradle 构建 | 47Log</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-99928731-1', 'auto');
+  ga('send', 'pageview');
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">47Log</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.47log.com/2017/10/31/2017-10-31-04:38/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HangoX">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="47Log">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">提速Android Gradle 构建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-31T04:38:48+00:00">
+                2017-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/31/2017-10-31-04:38/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/31/2017-10-31-04:38/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/31/2017-10-31-04:38/" class="leancloud_visitors" data-flag-title="提速Android Gradle 构建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="提速法则一览"><a href="#提速法则一览" class="headerlink" title="提速法则一览"></a>提速法则一览</h2><table>
+<thead>
+<tr>
+<th>手段</th>
+<th>全量构建</th>
+<th>Java增量构建</th>
+<th>资源增量构建</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>升级 android gradle tools 到3.0</td>
+<td>-15s(-25%)</td>
+<td>-10(-38%)</td>
+<td>-2.5(-16%)</td>
+</tr>
+<tr>
+<td>避免使用遗留的Multidex</td>
+<td>-5.5s(-12%)</td>
+<td>-8(53%)</td>
+<td>same</td>
+</tr>
+<tr>
+<td>debug 环境关闭multi-APK</td>
+<td>-4.8s(-12%)</td>
+<td>-0.5s(-6%)</td>
+<td>-3s(-26%)</td>
+</tr>
+<tr>
+<td>设置包含最少的资源</td>
+<td>-6s(-17%)</td>
+<td>-1.5s(-24%)</td>
+<td>-2s(21%)</td>
+</tr>
+<tr>
+<td>关闭 png crunching</td>
+<td>-9s(-33%)</td>
+<td>same</td>
+<td>same</td>
+</tr>
+<tr>
+<td>使用Instance Run</td>
+<td>+7s(+37%)</td>
+<td>-3s(-54%)</td>
+<td>-3s(-42%)</td>
+</tr>
+<tr>
+<td>避免不注意的改变</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>不要使用动态版本号</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>注意分配 gradle 内存</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>开启 Gradle Caching</td>
+<td>-7s(-25%)</td>
+<td>same</td>
+<td>+0.5s(+12%)</td>
+</tr>
+<tr>
+<td>使用<code>implementation</code> 或者 <code>api</code> 代替 <code>compile</code></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>以上优化方案基于android gradle tools 3.0-alpha</p>
+<blockquote>
+<p>关于<a href="https://github.com/google/santa-tracker-android" target="_blank" rel="noopener">Santa Tracker Project</a></p>
+</blockquote>
+<blockquote>
+<ul>
+<li>9 个模块，包括Wear</li>
+<li>500 多个Java文件</li>
+<li>1700 个XML 文件，3500张PNG</li>
+<li>Multi-dex</li>
+<li>没有 annotation processors</li>
+<li>APK大小接近60MB</li>
+</ul>
+</blockquote>
+<p>这个项目可以在Google Github 帐号中找到</p>
+<a id="more"></a>
+<h2 id="优化方案详解"><a href="#优化方案详解" class="headerlink" title="优化方案详解"></a>优化方案详解</h2><h4 id="避免使用遗留的MultiDex"><a href="#避免使用遗留的MultiDex" class="headerlink" title="避免使用遗留的MultiDex"></a>避免使用遗留的MultiDex</h4><ul>
+<li>遗留的multidex是指使用了MultiDex 并且minSDkVersion &lt; 21</li>
+<li>遗留的multidex会导致构建的时候签名速度变慢</li>
+<li>使用Android Studio 2.3+ IDE构建的时候，会自动避免这样的状况</li>
+</ul>
+<p>也就是说，使用点击AS运行的按钮，这个不需要配置。</p>
+<h4 id="关闭-multi-APK"><a href="#关闭-multi-APK" class="headerlink" title="关闭 multi-APK"></a>关闭 multi-APK</h4><p>multi-apk 是为了根据配置生成不同的APK，以达到减少APK体积大小的问题。但是这个配置没有必要在开发的时候开启。</p>
+<h5 id="关闭方法"><a href="#关闭方法" class="headerlink" title="关闭方法"></a>关闭方法</h5><ol>
+<li>设置监测到flag 就关闭代码</li>
+</ol>
+<pre><code><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    android&#123;</span><br><span class="line">        <span class="keyword">if</span>(project.hasProperty(<span class="string">'devBuild'</span>))&#123;</span><br><span class="line">            splits.abi.enable = <span class="literal">false</span></span><br><span class="line">            splits.density.enable = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ``` </span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 在AS设定中加入flag</span><br><span class="line">    ![](<span class="string">http:</span><span class="comment">//7vzoxp.com1.z0.glb.clouddn.com/2017-11-01-15094320380595.jpg)</span></span><br><span class="line">    </span><br><span class="line"><span class="number">3.</span> 或者使用gradlew 构建</span><br><span class="line"></span><br><span class="line">    ```bash</span><br><span class="line">    ./gradlew <span class="string">app:</span>assembleDebug -PdevBuild</span><br></pre></td></tr></table></figure>
+</code></pre><h4 id="包含最少的资源"><a href="#包含最少的资源" class="headerlink" title="包含最少的资源"></a>包含最少的资源</h4><p>如果你的app是包含多资源的，比如多语言的和多分辨率。但是在开发的时候，大部分时间都是只用一种资源，所以其他资源就会无用，导致拖慢构建速度。</p>
+<p>以下是固定使用某种资源的办法</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">productFlavors&#123;</span><br><span class="line">    development&#123;</span><br><span class="line">        minSdkVersion <span class="number">21</span></span><br><span class="line">        resConfigs (<span class="string">"en"</span>,<span class="string">"xxhdpi"</span>)</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="关闭-png-压缩"><a href="#关闭-png-压缩" class="headerlink" title="关闭 png 压缩"></a>关闭 png 压缩</h4><p>png 在 android build tools 里面是默认开启的。这个功能可以使你构建更小的apk，但是在debug构建中，我们并不需要这个功能，所以，应该在debug构建的时候禁止。</p>
+<p>禁止方法就是使用关闭multi-APK 一样的标记</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">       <span class="keyword">if</span>(project.hasProperty(<span class="string">'devBuild'</span>))&#123;</span><br><span class="line">           splits.abi.enable = <span class="literal">false</span></span><br><span class="line">           splits.density.enable = <span class="literal">false</span></span><br><span class="line">           aaptOptions.cruncherEnabled = <span class="literal">false</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>添加标记的方法同关闭 multi-APK 的一样</p>
+<blockquote>
+<p>当然你可以把图片转换到webp , 如果你的PNG已经压缩过的也可以完全关闭这个功能</p>
+</blockquote>
+<h4 id="使用-Instant-Run"><a href="#使用-Instant-Run" class="headerlink" title="使用 Instant Run"></a>使用 Instant Run</h4><p>Instant Run 已经要求最低API 为21 ，各方面的兼容性都好了很多，推荐使用。<br>当然完整编译是需要更长的时间的</p>
+<h4 id="避免不注意的改变"><a href="#避免不注意的改变" class="headerlink" title="避免不注意的改变"></a>避免不注意的改变</h4><p><strong>栗子</strong></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> buildDateTime = <span class="keyword">new</span> Date().format(<span class="string">'yyMMddHHmm'</span>).toInteger()</span><br><span class="line">android&#123;</span><br><span class="line">    defaultConfig&#123;</span><br><span class="line">        versionCode buildDateTime</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个操作看起来很合理，每次构建的时候都可以获得唯一的versionCode，这样每次测试就能根据versionCode 来告诉你问题所在。但是，对于debug构建来说，这不是一个好的设置。这个设置会导致 AndroidManifest 改变 , AndroidManifest 改变会导致增量编译的时间增加。</p>
+<p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-11-01-15094385826761.jpg" alt="Manifest 改变对于编译的影响"></p>
+<h5 id="Crashlytics"><a href="#Crashlytics" class="headerlink" title="Crashlytics"></a>Crashlytics</h5><p>Crashlytics 是个很好的开发工具，如果你使用得正确的话。Crashlytics 每次构建的时候都会生成唯一的ID，关掉这个ID可以加快构建速度。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">'io.fabric'</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">android&#123;</span><br><span class="line">    buildTypes&#123;</span><br><span class="line">        debug&#123;</span><br><span class="line">            ext.alwaysUpdateBuildId = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="不要使用动态版本号"><a href="#不要使用动态版本号" class="headerlink" title="不要使用动态版本号"></a>不要使用动态版本号</h5><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    dependencies&#123;</span><br><span class="line">        compile <span class="string">'com.android.suport:appcompat-v7:+'</span>        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上的依赖使用了动态版本号来设置使用最新的版本号。但是这样会导致gradle每24小时就要联网检查最新的版本，增加了构建的时间。同时，这样使用会导致你的构建不稳定，可能今天还能构建成功，但是明天就失败了</p>
+<h4 id="注意分配-Gradle-内存"><a href="#注意分配-Gradle-内存" class="headerlink" title="注意分配 Gradle 内存"></a>注意分配 Gradle 内存</h4><p>在新建一个项目的时候，默认在 gradle.properties 中设置了 gradle 使用的内存为1.5G，这可能是个好的值，也可能不是,取决你你项目的大小，越大的项目需要越大的内存</p>
+<p><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-11-01-15094404747010.jpg" style="width: 100%"></p>
+<h4 id="开启-Gradle-缓存"><a href="#开启-Gradle-缓存" class="headerlink" title="开启 Gradle 缓存"></a>开启 Gradle 缓存</h4><p>这是 Gradle 3.5的新特性 ,和 2.3 build chache 是不一样的，可以接受任何系之前的构建，任何的地点的构建。<br>开启代码如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.gradle.caching = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h4 id="使用implementation-或者-api-代替-compile"><a href="#使用implementation-或者-api-代替-compile" class="headerlink" title="使用implementation 或者 api 代替 compile"></a>使用<code>implementation</code> 或者 <code>api</code> 代替 <code>compile</code></h4><p>假设你有如图这几个项目<br><img src="http://7vzoxp.com1.z0.glb.clouddn.com/2017-11-01-15094467796965.jpg" style="width : 100%"></p>
+<p>app 依赖与lib1,lib1依赖于 lib2，但是，app只使用了lib1提供的公共api。如果使用<code>compile</code> 关键字，当你更改lib2的时候，app,lib1 都要重新编译。但是，如果app 是使用<code>implementtation</code>依赖lib1的时候，lib2 就算发生更改，app也不需要重新编译。</p>
+<blockquote>
+<p>所以我们在编写库的时候，如果库依赖的库不想曝光给使用者，建议使用<code>implementation</code>,如果你想把自己使用的库曝光给使用者，请使用 <code>api</code> 关键字</p>
+</blockquote>
+<h2 id="额外提及"><a href="#额外提及" class="headerlink" title="额外提及"></a>额外提及</h2><h3 id="模块化好处"><a href="#模块化好处" class="headerlink" title="模块化好处"></a>模块化好处</h3><ul>
+<li>Gradle 可以构建平行的构建模块</li>
+<li>缺乏增量任务的变通方法</li>
+<li>多模块代表着多任务,多任务代表着可以平行执行</li>
+<li>Some parallelism within a task is provided but limited（自己看吧，我也看不懂）</li>
+</ul>
+<h3 id="如何调试缓慢构建"><a href="#如何调试缓慢构建" class="headerlink" title="如何调试缓慢构建"></a>如何调试缓慢构建</h3><p>Gradle 提供了工具去帮助知道哪里花了大部分时间</p>
+<ul>
+<li>–dry-run</li>
+<li>–info</li>
+<li>–profile</li>
+<li>Gradle profile </li>
+</ul>
+<h5 id="–dry-run"><a href="#–dry-run" class="headerlink" title="–dry-run"></a>–dry-run</h5><p>可以让你知道花费了多少时间在 <code>configuration</code> 上,10s以内是最好的，如果配置的时间过长，你的方法gradle 已经出了问题了。</p>
+<p>使用方法：<code>gradle yourtask --dry-run</code></p>
+<h5 id="–info"><a href="#–info" class="headerlink" title="–info"></a>–info</h5><p>这个参数可以告诉你，当前任务执行的详细信息，包括在执行什么，还有为什么执行。</p>
+<p>使用方法：<code>gradle yourtask --info</code></p>
+<h5 id="–profile"><a href="#–profile" class="headerlink" title="–profile"></a>–profile</h5><p>这个参数会在 <code>you-project/build/reports/profile、</code> 中生成一个html文件，详细告诉你哪个任务花了多少时间，是个非常有用的debug工具</p>
+<p>使用方法：<code>gradle build --profile</code></p>
+<h5 id="Gradle-Profiler"><a href="#Gradle-Profiler" class="headerlink" title="Gradle Profiler"></a>Gradle Profiler</h5><p><a href="https://github.com/gradle/gradle-profiler" target="_blank" rel="noopener">Gradle Profiler</a> 是 Gradle 官方用于自动收集Gradle构建的分析和基准测试信息的工具。具体的使用办法在 github 上有，以后有必要再出个专题吧。这个工具是当上面的办法都无效的时候才推荐使用的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/googleio/" rel="tag"># googleio</a>
+          
+            <a href="/tags/2017/" rel="tag"># 2017</a>
+          
+            <a href="/tags/gradle/" rel="tag"># gradle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/25/2017-10-25-15:04/" rel="next" title="Activity 启动模式">
+                <i class="fa fa-chevron-left"></i> Activity 启动模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/02/2017-11-02-02:45/" rel="prev" title="Firebase 的新功能（2017）">
+                Firebase 的新功能（2017） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HangoX" />
+          <p class="site-author-name" itemprop="name">HangoX</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#提速法则一览"><span class="nav-number">1.</span> <span class="nav-text">提速法则一览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化方案详解"><span class="nav-number">2.</span> <span class="nav-text">优化方案详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#避免使用遗留的MultiDex"><span class="nav-number">2.0.1.</span> <span class="nav-text">避免使用遗留的MultiDex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭-multi-APK"><span class="nav-number">2.0.2.</span> <span class="nav-text">关闭 multi-APK</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#关闭方法"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">关闭方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#包含最少的资源"><span class="nav-number">2.0.3.</span> <span class="nav-text">包含最少的资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭-png-压缩"><span class="nav-number">2.0.4.</span> <span class="nav-text">关闭 png 压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Instant-Run"><span class="nav-number">2.0.5.</span> <span class="nav-text">使用 Instant Run</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#避免不注意的改变"><span class="nav-number">2.0.6.</span> <span class="nav-text">避免不注意的改变</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Crashlytics"><span class="nav-number">2.0.6.1.</span> <span class="nav-text">Crashlytics</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#不要使用动态版本号"><span class="nav-number">2.0.6.2.</span> <span class="nav-text">不要使用动态版本号</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意分配-Gradle-内存"><span class="nav-number">2.0.7.</span> <span class="nav-text">注意分配 Gradle 内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开启-Gradle-缓存"><span class="nav-number">2.0.8.</span> <span class="nav-text">开启 Gradle 缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用implementation-或者-api-代替-compile"><span class="nav-number">2.0.9.</span> <span class="nav-text">使用implementation 或者 api 代替 compile</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#额外提及"><span class="nav-number">3.</span> <span class="nav-text">额外提及</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化好处"><span class="nav-number">3.1.</span> <span class="nav-text">模块化好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何调试缓慢构建"><span class="nav-number">3.2.</span> <span class="nav-text">如何调试缓慢构建</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#–dry-run"><span class="nav-number">3.2.0.1.</span> <span class="nav-text">–dry-run</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#–info"><span class="nav-number">3.2.0.2.</span> <span class="nav-text">–info</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#–profile"><span class="nav-number">3.2.0.3.</span> <span class="nav-text">–profile</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Gradle-Profiler"><span class="nav-number">3.2.0.4.</span> <span class="nav-text">Gradle Profiler</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HangoX</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+    由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  </div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">
+    主题 &mdash;
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+      NexT.Muse
+    </a>
+  </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://47log.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://blog.47log.com/2017/10/31/2017-10-31-04:38/';
+          this.page.identifier = '2017/10/31/2017-10-31-04:38/';
+          this.page.title = '提速Android Gradle 构建';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://47log.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("cvsbxzMiFR6fHw8Ki6J0I1ct-gzGzoHsz", "SiCTwVOB5Amm4ui6xXeMH9u1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
